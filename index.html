@@ -198,21 +198,14 @@
         <p class="text-muted">Selecione para qual turma essas informações pertencem, envie as imagens da Matriz e do Sumário, e a IA fará o mapeamento automático.</p>
 
         <form id="form-ia-mapeador" onsubmit="processarMapeamentoIA(event)">
-          <div class="row g-3 mb-3">
-            <div class="col-md-6">
-              <label class="form-label fw-bold">Turma de Destino (Onde os dados serão salvos)</label>
-              <select class="form-select fw-semibold" id="select-turma-ia" required>
-                <option value="6ano">6º Ano - Ensino Fundamental</option>
-                <option value="7ano">7º Ano - Ensino Fundamental</option>
-                <option value="8ano">8º Ano - Ensino Fundamental</option>
-                <option value="9ano">9º Ano - Ensino Fundamental</option>
-              </select>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label fw-bold">Chave de API do Google Gemini</label>
-              <input type="password" class="form-control" id="api-key-gemini" placeholder="Cole sua chave (AI Studio) aqui..." required>
-              <div class="form-text">Necessária para processar os arquivos diretamente do navegador no GitHub Pages.</div>
-            </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Turma de Destino (Onde os dados serão salvos)</label>
+            <select class="form-select fw-semibold" id="select-turma-ia" required>
+              <option value="6ano">6º Ano - Ensino Fundamental</option>
+              <option value="7ano">7º Ano - Ensino Fundamental</option>
+              <option value="8ano">8º Ano - Ensino Fundamental</option>
+              <option value="9ano">9º Ano - Ensino Fundamental</option>
+            </select>
           </div>
 
           <div class="row g-3 mb-4">
@@ -459,15 +452,12 @@
     async function processarMapeamentoIA(event) {
       event.preventDefault();
 
-      const apiKey = document.getElementById('api-key-gemini').value.trim();
+      // COLE SUA CHAVE DO GOOGLE AI STUDIO NA LINHA ABAIXO
+      const apiKey = "SUA_CHAVE_API_AQUI"; 
+      
       const turmaKey = document.getElementById('select-turma-ia').value;
       const filesMatriz = Array.from(document.getElementById('img-matriz').files);
       const filesSumario = Array.from(document.getElementById('img-sumario').files);
-
-      if (!apiKey) {
-        alert("Por favor, insira uma Chave de API do Google Gemini para prosseguir.");
-        return;
-      }
 
       document.getElementById('form-ia-mapeador').classList.add('d-none');
       document.getElementById('loading-ia').classList.remove('d-none');
@@ -534,7 +524,7 @@
 
       } catch (err) {
         console.error(err);
-        alert(`Erro ao processar as imagens com a IA:\n${err.message}\n\nVerifique se a chave de API é válida e tente novamente.`);
+        alert(`Erro ao processar as imagens com a IA:\n${err.message}\n\nVerifique se a chave de API inserida no código é válida e tente novamente.`);
       } finally {
         document.getElementById('form-ia-mapeador').classList.remove('d-none');
         document.getElementById('loading-ia').classList.add('d-none');
