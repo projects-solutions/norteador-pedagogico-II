@@ -6,6 +6,8 @@
   
   <!-- Favicon Oficial -->
   <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="shortcut icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
 
   <title>Norteador Pedagógico - Ciências da Natureza</title>
 
@@ -45,37 +47,40 @@
 
     .nav-tabs-scroll {
       display: flex;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      white-space: nowrap;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 5px;
-    }
-
-    .nav-tabs-scroll::-webkit-scrollbar {
-      height: 4px;
-    }
-
-    .nav-tabs-scroll::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 10px;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
     }
 
     .nav-tab-btn {
-      color: rgba(255, 255, 255, 0.75);
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 50rem;
-      padding: 0.5rem 1.25rem;
+      padding: 0.45rem 0.85rem;
       font-weight: 600;
+      font-size: 0.85rem;
       text-decoration: none;
       transition: all 0.2s ease;
-      margin-right: 0.5rem;
+      text-align: center;
+      flex: 1 1 auto;
+      white-space: nowrap;
+    }
+
+    @media (min-width: 768px) {
+      .nav-tabs-scroll {
+        justify-content: start;
+      }
+      .nav-tab-btn {
+        padding: 0.5rem 1.25rem;
+        font-size: 1rem;
+        flex: 0 0 auto;
+      }
     }
 
     .nav-tab-btn:hover {
       color: #ffffff;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
     }
 
     .nav-tab-btn.active {
@@ -140,7 +145,7 @@
 <body>
 
   <!-- Header principal -->
-  <header class="header-bg pt-4 pb-5 text-white mb-4">
+  <header class="header-bg pt-4 pb-4 text-white mb-4">
     <div class="container">
       <div class="d-flex align-items-center justify-content-between mb-3">
         <div class="d-flex align-items-center gap-3">
@@ -155,13 +160,13 @@
         </span>
       </div>
 
-      <!-- Navegação Superior por Abas (Matérias) -->
-      <nav class="nav-tabs-scroll mt-4">
+      <!-- Navegação Superior por Abas (Matérias) Adaptada para Mobile -->
+      <nav class="nav-tabs-scroll mt-3">
         <a href="index.html" class="nav-tab-btn active">
-          <i class="fa-solid fa-flask me-1"></i> Ciências da Natureza
+          <i class="fa-solid fa-flask me-1"></i> Ciências
         </a>
         <a href="portugues.html" class="nav-tab-btn">
-          <i class="fa-solid fa-book-open me-1"></i> Língua Portuguesa
+          <i class="fa-solid fa-book-open me-1"></i> Português
         </a>
         <a href="matematica.html" class="nav-tab-btn">
           <i class="fa-solid fa-calculator me-1"></i> Matemática
