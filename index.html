@@ -157,7 +157,7 @@
         </div>
       </div>
 
-      <!-- Navegação Superior por Abas (Preservada) -->
+      <!-- Navegação Superior por Abas -->
       <nav class="nav-tabs-scroll mt-4">
         <a href="index.html" class="nav-tab-btn active">
           <i class="fa-solid fa-flask me-1"></i> Ciências da Natureza
@@ -182,7 +182,7 @@
           <h2 class="h4 fw-bold mb-0"><i class="fa-solid fa-file-import text-primary me-2"></i>Mapeamento de Dados</h2>
           <button class="btn-close" onclick="trocarAbaPrincipal('turmas')"></button>
         </div>
-        <p class="text-muted mb-4">Cole abaixo o texto ou JSON com as habilidades e mapeamentos organizados. Selecione a turma correspondente e clique em salvar para atualizar o painel.</p>
+        <p class="text-muted mb-4">Cole abaixo todas as habilidades organizadas de uma vez. O leitor irá identificar cada código, descrição, unidade, capítulo e página automaticamente.</p>
 
         <form id="form-mapeamento" onsubmit="salvarMapeamentoTexto(event)">
           <div class="row g-3 mb-3">
@@ -206,16 +206,12 @@
           </div>
 
           <div class="mb-4">
-            <label class="form-label fw-bold">Conteúdo Organizado (Texto ou Lista)</label>
-            <textarea class="form-control font-monospace fs-7" id="input-texto-mapeamento" rows="10" placeholder="Exemplo:
-* 6EF01_CN: Interpretar o ciclo da água.
-  - Unidade / Capítulo: UNIDADE D — CAPÍTULO 10
-  - Seção / Tema: 8. Hidrosfera e ciclo da água
-  - Página: 176" required></textarea>
+            <label class="form-label fw-bold">Cole todas as Habilidades Mapeadas</label>
+            <textarea class="form-control font-monospace fs-7" id="input-texto-mapeamento" rows="12" placeholder="Cole aqui o texto completo de todas as habilidades..." required></textarea>
           </div>
 
           <button type="submit" class="btn btn-primary fw-bold rounded-pill px-4 py-2 w-100">
-            <i class="fa-solid fa-floppy-disk me-2"></i> Salvar Mapeamento na Turma
+            <i class="fa-solid fa-floppy-disk me-2"></i> Salvar Mapeamento Completo na Turma
           </button>
         </form>
       </div>
@@ -306,7 +302,7 @@
   </footer>
 
   <script>
-    /* BANCO DE DADOS INICIAL DO SISTEMA */
+    /* BANCO DE DADOS DA APLICAÇÃO */
     const bancoDados = {
       "6ano": { "titulo": "6º Ano - Ensino Fundamental", "ciclos": { 1: [], 2: [], 3: [] } },
       "7ano": { "titulo": "7º Ano - Ensino Fundamental", "ciclos": { 1: [], 2: [], 3: [] } },
@@ -429,7 +425,7 @@
       `).join('');
     }
 
-    /* PROCESSADOR DE TEXTO PARSER PARA A ABA MAPEAMENTO */
+    /* LEITOR INTELIGENTE MULTI-HABILIDADES */
     function salvarMapeamentoTexto(event) {
       event.preventDefault();
 
@@ -440,26 +436,35 @@
       try {
         let novosItens = [];
 
-        // Se o usuário colar um JSON direto
+        // 1. Caso seja formato JSON puro
         if (textoBruto.trim().startsWith('[') || textoBruto.trim().startsWith('{')) {
           const parsed = JSON.parse(textoBruto);
-          novosItens = Array.isArray(parsed) ? parsed : (parsed.itens || []);
+          novosItens = Array.isArray(parsed) ? parsed : (parsed.itens || parsed.habilidades || []);
         } else {
-          // Parser simples de blocos de texto
-          const blocos = textoBruto.split(/\n(?=\*|\dEF|\n)/g);
-          
+          // 2. Divisão inteligente por blocos (por asterisco, hífen ou códigos EF)
+          const blocos = textoBruto.split(/\n(?=\s*[*•-]\s*|\s*(?:[6789]EF|EF\d{2})\w*)/gi);
+
           blocos.forEach(bloco => {
-            if (!bloco.trim()) return;
+            const blocoLimpo = bloco.trim();
+            if (!blocoLimpo) return;
 
-            const linhaCodigo = bloco.match(/(?:6EF|7EF|8EF|9EF)\d{2}_CN/i);
-            const codigo = linhaCodigo ? linhaCodigo[0] : "S/C";
+            // Busca o código da habilidade (ex: 6EF01_CN, EF67LP01, etc.)
+            const codigoMatch = blocoLimpo.match(/\b(?:[6789]EF\d{2}_\w+|EF\d{2,4}[A-Z]{2}\d{2,4})\b/i);
+            const codigo = codigoMatch ? codigoMatch[0].toUpperCase() : "S/C";
 
-            const descMatch = bloco.match(/(?:CN:?|\*)\s*([^\n\r]+)/);
-            const caed = descMatch ? descMatch[1].replace(/^[*\s]+/, '').trim() : bloco.split('\n')[0];
+            // Busca a descrição da habilidade
+            let caed = "Sem descrição";
+            const descMatch = blocoLimpo.match(/(?::|\*|-|•)\s*([^\n\r]+)/);
+            if (descMatch) {
+              caed = descMatch[1].replace(/^[*\-•\s]+/, '').trim();
+            } else {
+              caed = blocoLimpo.split('\n')[0].replace(/^[*\-•\s]+/, '').trim();
+            }
 
-            const utMatch = bloco.match(/(?:Unidade|UNIDADE|Capítulo|CAPÍTULO)[:\s]+([^\n\r]+)/i);
-            const capMatch = bloco.match(/(?:Seção|Tema|TEMA)[:\s]+([^\n\r]+)/i);
-            const pagMatch = bloco.match(/(?:Página|Páginas|Pág|pag)[:\s]+([^\n\r]+)/i);
+            // Extração de Unidade, Capítulo, Tema e Página
+            const utMatch = blocoLimpo.match(/(?:Unidade|UNIDADE|Capítulo|CAPÍTULO)[:\s]+([^\n\r]+)/i);
+            const capMatch = blocoLimpo.match(/(?:Seção|SEÇÃO|Tema|TEMA)[:\s]+([^\n\r]+)/i);
+            const pagMatch = blocoLimpo.match(/(?:Página|PÁGINA|Pág|PAG|pág)[:\s]+([^\n\r]+)/i);
 
             novosItens.push({
               codigo: codigo,
@@ -471,16 +476,22 @@
           });
         }
 
+        if (novosItens.length === 0) {
+          alert("Nenhuma habilidade válida foi identificada. Verifique o texto e tente novamente.");
+          return;
+        }
+
+        // Salva todos os itens lidos no ciclo selecionado
         bancoDados[turmaKey].ciclos[cicloNum] = novosItens;
 
-        alert(`Mapeamento salvo com sucesso no ${bancoDados[turmaKey].titulo} (Ciclo ${cicloNum})!`);
+        alert(`Sucesso! ${novosItens.length} habilidades cadastradas no ${bancoDados[turmaKey].titulo} (Ciclo ${cicloNum}).`);
         document.getElementById('form-mapeamento').reset();
         atualizarContadoresTurmas();
         abrirTurma(turmaKey);
 
       } catch (err) {
         console.error(err);
-        alert("Erro ao ler o texto formatado. Certifique-se de colar os dados organizados.");
+        alert("Erro ao ler o texto. Verifique a formatação do conteúdo e tente novamente.");
       }
     }
   </script>
