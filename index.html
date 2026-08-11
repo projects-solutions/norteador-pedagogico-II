@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Norteador Pedagógico - Ciências da Natureza</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- FontAwesome 6.4 CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #4f46e5, #7c3aed);
+      --bg-body: #f8fafc;
+      --indigo-accent: #6366f1;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-body);
+      color: #334155;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-bg {
+      background: var(--primary-gradient);
+      border-bottom-left-radius: 2rem;
+      border-bottom-right-radius: 2rem;
+      box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.25);
+    }
+
+    .nav-tabs-scroll {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 5px;
+    }
+
+    .nav-tabs-scroll::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .nav-tabs-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+    }
+
+    .nav-tab-btn {
+      color: rgba(255, 255, 255, 0.75);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50rem;
+      padding: 0.5rem 1.25rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      margin-right: 0.5rem;
+    }
+
+    .nav-tab-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-tab-btn.active {
+      color: #4f46e5;
+      background: #ffffff;
+      border-color: #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-turma {
+      border: none;
+      border-radius: 1.25rem;
+      background: #ffffff;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+
+    .card-turma:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 25px -5px rgba(99, 102, 241, 0.15);
+    }
+
+    .badge-custom {
+      background-color: #e0e7ff;
+      color: #4338ca;
+      font-weight: 700;
+      padding: 0.4em 0.8em;
+      border-radius: 50rem;
+    }
+
+    .cycle-btn {
+      border: 1px solid #cbd5e1;
+      background-color: #ffffff;
+      color: #64748b;
+      font-weight: 600;
+      border-radius: 0.75rem;
+      padding: 0.6rem 1.2rem;
+      transition: all 0.2s ease;
+    }
+
+    .cycle-btn:hover {
+      background-color: #f1f5f9;
+      color: #334155;
+    }
+
+    .cycle-btn.active {
+      background-color: var(--indigo-accent);
+      color: #ffffff;
+      border-color: var(--indigo-accent);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .item-card {
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      border-left: 4px solid var(--indigo-accent);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header principal -->
+  <header class="header-bg pt-4 pb-5 text-white mb-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <div class="d-flex align-items-center gap-3">
+          <i class="fa-solid fa-compass fa-2x text-warning"></i>
+          <div>
+            <h1 class="h3 fw-bold mb-0">Norteador Pedagógico</h1>
+            <p class="small text-white-50 mb-0">Mapeamento de Habilidades CAEd &amp; Livro Didático</p>
+          </div>
+        </div>
+        <span class="badge text-bg-light fw-semibold fs-6 px-3 py-2 d-none d-md-inline-block">
+          <i class="fa-solid fa-flask text-primary me-1"></i> Ciências da Natureza
+        </span>
+      </div>
+
+      <!-- Navegação Superior por Abas (Matérias) -->
+      <nav class="nav-tabs-scroll mt-4">
+        <a href="index.html" class="nav-tab-btn active">
+          <i class="fa-solid fa-flask me-1"></i> Ciências da Natureza
+        </a>
+        <a href="portugues.html" class="nav-tab-btn">
+          <i class="fa-solid fa-book-open me-1"></i> Língua Portuguesa
+        </a>
+        <a href="matematica.html" class="nav-tab-btn">
+          <i class="fa-solid fa-calculator me-1"></i> Matemática
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="container flex-grow-1 pb-5">
+
+    <!-- TELA 1: SELEÇÃO DE TURMAS -->
+    <section id="view-turmas">
+      <div class="mb-4">
+        <h2 class="h4 fw-bold">Selecione o Ano Escolar</h2>
+        <p class="text-muted">Escolha a turma para visualizar o mapeamento por ciclos pedagógicos.</p>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-6 col-md-3">
+          <div class="card card-turma p-3 text-center h-100" onclick="abrirTurma('6ano')">
+            <div class="mb-3 mt-2">
+              <i class="fa-solid fa-atom fa-3x text-primary"></i>
+            </div>
+            <h3 class="h5 fw-bold">6º Ano</h3>
+            <span class="badge badge-custom mt-2" id="badge-count-6ano">0 Habilidades</span>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <div class="card card-turma p-3 text-center h-100" onclick="abrirTurma('7ano')">
+            <div class="mb-3 mt-2">
+              <i class="fa-solid fa-dna fa-3x text-primary"></i>
+            </div>
+            <h3 class="h5 fw-bold">7º Ano</h3>
+            <span class="badge badge-custom mt-2" id="badge-count-7ano">0 Habilidades</span>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <div class="card card-turma p-3 text-center h-100" onclick="abrirTurma('8ano')">
+            <div class="mb-3 mt-2">
+              <i class="fa-solid fa-microscope fa-3x text-primary"></i>
+            </div>
+            <h3 class="h5 fw-bold">8º Ano</h3>
+            <span class="badge badge-custom mt-2" id="badge-count-8ano">0 Habilidades</span>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <div class="card card-turma p-3 text-center h-100" onclick="abrirTurma('9ano')">
+            <div class="mb-3 mt-2">
+              <i class="fa-solid fa-earth-americas fa-3x text-primary"></i>
+            </div>
+            <h3 class="h5 fw-bold">9º Ano</h3>
+            <span class="badge badge-custom mt-2" id="badge-count-9ano">0 Habilidades</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 2: DASHBOARD DE DETALHES DA TURMA -->
+    <section id="view-detalhes" class="d-none">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <button class="btn btn-outline-secondary fw-semibold rounded-pill px-3" onclick="voltarParaTurmas()">
+          <i class="fa-solid fa-arrow-left me-1"></i> Voltar
+        </button>
+        <h2 class="h4 fw-bold mb-0" id="turma-titulo">6º Ano - Ensino Fundamental</h2>
+      </div>
+
+      <!-- Navegador de Ciclos -->
+      <div class="d-flex gap-2 mb-4 overflow-auto pb-2">
+        <button class="btn cycle-btn active" id="btn-ciclo-1" onclick="selecionarCiclo(1)">
+          Ciclo I <span class="badge text-bg-light rounded-pill ms-1" id="badge-ciclo-1">0</span>
+        </button>
+        <button class="btn cycle-btn" id="btn-ciclo-2" onclick="selecionarCiclo(2)">
+          Ciclo II <span class="badge text-bg-light rounded-pill ms-1" id="badge-ciclo-2">0</span>
+        </button>
+        <button class="btn cycle-btn" id="btn-ciclo-3" onclick="selecionarCiclo(3)">
+          Ciclo III <span class="badge text-bg-light rounded-pill ms-1" id="badge-ciclo-3">0</span>
+        </button>
+      </div>
+
+      <!-- Lista de Itens do Ciclo -->
+      <div id="lista-conteudo" class="row g-3">
+        <!-- Renderização dinâmica via JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="text-center py-3 text-muted small mt-auto border-top">
+    Norteador Pedagógico &copy; 2026 - Mapeamento CAEd
+  </footer>
+
+  <script>
+    /* BANCO DE DADOS EM BLANCO (ESTRUTURA) */
+    const bancoDados = {
+      "6ano": {
+        "titulo": "6º Ano - Ensino Fundamental",
+        "ciclos": {
+          1: [
+            // EXEMPLO DE COMO ADICIONAR:
+            // { codigo: "6EF01_CN", caed: "Descrição do descritor CAEd...", ut: "Unidade / Capítulo", cap: "Seção / Tema", pag: "100" }
+          ],
+          2: [],
+          3: []
+        }
+      },
+      "7ano": {
+        "titulo": "7º Ano - Ensino Fundamental",
+        "ciclos": { 1: [], 2: [], 3: [] }
+      },
+      "8ano": {
+        "titulo": "8º Ano - Ensino Fundamental",
+        "ciclos": { 1: [], 2: [], 3: [] }
+      },
+      "9ano": {
+        "titulo": "9º Ano - Ensino Fundamental",
+        "ciclos": { 1: [], 2: [], 3: [] }
+      }
+    };
+
+    let turmaAtual = null;
+    let cicloAtual = 1;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      atualizarContadoresTurmas();
+    });
+
+    function atualizarContadoresTurmas() {
+      Object.keys(bancoDados).forEach(turmaKey => {
+        const turma = bancoDados[turmaKey];
+        let total = 0;
+        Object.keys(turma.ciclos).forEach(c => {
+          total += turma.ciclos[c].length;
+        });
+        const badgeElement = document.getElementById(`badge-count-${turmaKey}`);
+        if (badgeElement) {
+          badgeElement.textContent = `${total} Habilidade${total === 1 ? '' : 's'}`;
+        }
+      });
+    }
+
+    function abrirTurma(turmaKey) {
+      turmaAtual = turmaKey;
+      cicloAtual = 1;
+      
+      document.getElementById('turma-titulo').textContent = bancoDados[turmaKey].titulo;
+      document.getElementById('view-turmas').classList.add('d-none');
+      document.getElementById('view-detalhes').classList.remove('d-none');
+
+      renderizarCiclos();
+    }
+
+    function voltarParaTurmas() {
+      turmaAtual = null;
+      document.getElementById('view-detalhes').classList.add('d-none');
+      document.getElementById('view-turmas').classList.remove('d-none');
+      atualizarContadoresTurmas();
+    }
+
+    function selecionarCiclo(cicloNum) {
+      cicloAtual = cicloNum;
+      
+      [1, 2, 3].forEach(num => {
+        const btn = document.getElementById(`btn-ciclo-${num}`);
+        if (num === cicloNum) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      renderizarListaConteudo();
+    }
+
+    function renderizarCiclos() {
+      const ciclosObj = bancoDados[turmaAtual].ciclos;
+      [1, 2, 3].forEach(num => {
+        const count = ciclosObj[num] ? ciclosObj[num].length : 0;
+        document.getElementById(`badge-ciclo-${num}`).textContent = count;
+      });
+
+      selecionarCiclo(cicloAtual);
+    }
+
+    function renderizarListaConteudo() {
+      const container = document.getElementById('lista-conteudo');
+      const itens = bancoDados[turmaAtual].ciclos[cicloAtual] || [];
+
+      if (itens.length === 0) {
+        container.innerHTML = `
+          <div class="col-12 text-center py-5">
+            <div class="p-4 bg-white rounded-4 shadow-sm d-inline-block">
+              <i class="fa-solid fa-folder-open fa-3x text-muted mb-3"></i>
+              <p class="text-muted fw-medium mb-0">Nenhuma habilidade cadastrada para este ciclo.</p>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = itens.map(item => `
+        <div class="col-12">
+          <div class="card item-card p-3">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <span class="badge text-bg-indigo fw-bold" style="background-color: var(--indigo-accent); color: white;">
+                ${item.codigo || 'S/C'}
+              </span>
+              <span class="badge text-bg-light border text-dark">
+                <i class="fa-solid fa-book-bookmark me-1 text-primary"></i> Pág. ${item.pag || 'N/A'}
+              </span>
+            </div>
+            <h4 class="h6 fw-bold text-dark mb-2">${item.caed || 'Sem descrição'}</h4>
+            <div class="row g-2 pt-2 border-top text-muted small">
+              <div class="col-md-6">
+                <strong>Unidade / Cap:</strong> ${item.ut || 'N/A'}
+              </div>
+              <div class="col-md-6">
+                <strong>Seção / Tema:</strong> ${item.cap || 'N/A'}
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>
