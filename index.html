@@ -67,6 +67,7 @@
       text-decoration: none;
       transition: all 0.2s ease;
       margin-right: 0.5rem;
+      cursor: pointer;
     }
 
     .nav-tab-btn:hover {
@@ -131,6 +132,19 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.03);
       border-left: 4px solid var(--indigo-accent);
     }
+
+    .upload-box {
+      border: 2px dashed #cbd5e1;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      text-align: center;
+      background: #ffffff;
+      transition: border-color 0.2s ease;
+    }
+
+    .upload-box:hover {
+      border-color: var(--indigo-accent);
+    }
   </style>
 </head>
 <body>
@@ -151,17 +165,14 @@
         </span>
       </div>
 
-      <!-- Navegação Superior por Abas (Matérias) -->
+      <!-- Navegação Superior por Abas -->
       <nav class="nav-tabs-scroll mt-4">
-        <a href="index.html" class="nav-tab-btn active">
-          <i class="fa-solid fa-flask me-1"></i> Ciências da Natureza
-        </a>
-        <a href="portugues.html" class="nav-tab-btn">
-          <i class="fa-solid fa-book-open me-1"></i> Língua Portuguesa
-        </a>
-        <a href="matematica.html" class="nav-tab-btn">
-          <i class="fa-solid fa-calculator me-1"></i> Matemática
-        </a>
+        <button class="nav-tab-btn active" id="tab-visualizar" onclick="trocarAbaPrincipal('visualizar')">
+          <i class="fa-solid fa-layer-group me-1"></i> Consultar Turmas
+        </button>
+        <button class="nav-tab-btn" id="tab-mapeador" onclick="trocarAbaPrincipal('mapeador')">
+          <i class="fa-solid fa-wand-magic-sparkles me-1"></i> Mapeador IA (OCR)
+        </button>
       </nav>
     </div>
   </header>
@@ -247,6 +258,59 @@
       </div>
     </section>
 
+    <!-- TELA 3: ABA MAPEADOR IA (PROCESSADOR DE IMAGENS) -->
+    <section id="view-mapeador" class="d-none">
+      <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
+        <h2 class="h4 fw-bold mb-2"><i class="fa-solid fa-robot text-primary me-2"></i>Mapeador Automático de Habilidades</h2>
+        <p class="text-muted">Envie a imagem da **Matriz de Referência** e do **Sumário do Livro**. A IA fará a leitura rigorosa, correlacionando o conteúdo e alimentando seu banco de dados.</p>
+
+        <form id="form-ia-mapeador" onsubmit="processarMapeamentoIA(event)">
+          <div class="row g-3 mb-3">
+            <div class="col-md-4">
+              <label class="form-label fw-bold">Ano Escolar Alvo</label>
+              <select class="form-select" id="select-turma-ia" required>
+                <option value="6ano">6º Ano</option>
+                <option value="7ano">7º Ano</option>
+                <option value="8ano">8º Ano</option>
+                <option value="9ano">9º Ano</option>
+              </select>
+            </div>
+            <div class="col-md-8">
+              <label class="form-label fw-bold">Chave de API Gemini</label>
+              <input type="password" class="form-control" id="api-key-gemini" placeholder="Cole sua chave AI Studio aqui..." required>
+            </div>
+          </div>
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <div class="upload-box">
+                <i class="fa-solid fa-table-list fa-2x text-primary mb-2"></i>
+                <label class="form-label d-block fw-bold mb-1">Matriz de Habilidades (Ciclos)</label>
+                <input type="file" class="form-control" id="img-matriz" accept="image/*" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="upload-box">
+                <i class="fa-solid fa-book-open-reader fa-2x text-primary mb-2"></i>
+                <label class="form-label d-block fw-bold mb-1">Sumário do Livro Didático</label>
+                <input type="file" class="form-control" id="img-sumario" accept="image/*" required>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary fw-bold rounded-pill px-4 py-2 w-100" id="btn-processar-ia">
+            <i class="fa-solid fa-gears me-2"></i> Processar e Mapear com IA
+          </button>
+        </form>
+
+        <!-- Spinner de carregamento -->
+        <div id="loading-ia" class="text-center py-5 d-none">
+          <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+          <p class="fw-bold mt-3 text-indigo">Extraindo dados, correlacionando temas e páginas... Aguarde.</p>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer class="text-center py-3 text-muted small mt-auto border-top">
@@ -254,31 +318,12 @@
   </footer>
 
   <script>
-    /* BANCO DE DADOS EM BLANCO (ESTRUTURA) */
+    /* BANCO DE DADOS DA APLICAÇÃO */
     const bancoDados = {
-      "6ano": {
-        "titulo": "6º Ano - Ensino Fundamental",
-        "ciclos": {
-          1: [
-            // EXEMPLO DE COMO ADICIONAR:
-            // { codigo: "6EF01_CN", caed: "Descrição do descritor CAEd...", ut: "Unidade / Capítulo", cap: "Seção / Tema", pag: "100" }
-          ],
-          2: [],
-          3: []
-        }
-      },
-      "7ano": {
-        "titulo": "7º Ano - Ensino Fundamental",
-        "ciclos": { 1: [], 2: [], 3: [] }
-      },
-      "8ano": {
-        "titulo": "8º Ano - Ensino Fundamental",
-        "ciclos": { 1: [], 2: [], 3: [] }
-      },
-      "9ano": {
-        "titulo": "9º Ano - Ensino Fundamental",
-        "ciclos": { 1: [], 2: [], 3: [] }
-      }
+      "6ano": { "titulo": "6º Ano - Ensino Fundamental", "ciclos": { 1: [], 2: [], 3: [] } },
+      "7ano": { "titulo": "7º Ano - Ensino Fundamental", "ciclos": { 1: [], 2: [], 3: [] } },
+      "8ano": { "titulo": "8º Ano - Ensino Fundamental", "ciclos": { 1: [], 2: [], 3: [] } },
+      "9ano": { "titulo": "9º Ano - Ensino Fundamental", "ciclos": { 1: [], 2: [], 3: [] } }
     };
 
     let turmaAtual = null;
@@ -287,6 +332,22 @@
     document.addEventListener("DOMContentLoaded", () => {
       atualizarContadoresTurmas();
     });
+
+    /* NAVEGAÇÃO DE ABAS */
+    function trocarAbaPrincipal(aba) {
+      document.getElementById('tab-visualizar').classList.toggle('active', aba === 'visualizar');
+      document.getElementById('tab-mapeador').classList.toggle('active', aba === 'mapeador');
+
+      if (aba === 'visualizar') {
+        document.getElementById('view-mapeador').classList.add('d-none');
+        document.getElementById('view-turmas').classList.remove('d-none');
+        document.getElementById('view-detalhes').classList.add('d-none');
+      } else {
+        document.getElementById('view-turmas').classList.add('d-none');
+        document.getElementById('view-detalhes').classList.add('d-none');
+        document.getElementById('view-mapeador').classList.remove('d-none');
+      }
+    }
 
     function atualizarContadoresTurmas() {
       Object.keys(bancoDados).forEach(turmaKey => {
@@ -322,16 +383,10 @@
 
     function selecionarCiclo(cicloNum) {
       cicloAtual = cicloNum;
-      
       [1, 2, 3].forEach(num => {
         const btn = document.getElementById(`btn-ciclo-${num}`);
-        if (num === cicloNum) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
+        if (btn) btn.classList.toggle('active', num === cicloNum);
       });
-
       renderizarListaConteudo();
     }
 
@@ -341,7 +396,6 @@
         const count = ciclosObj[num] ? ciclosObj[num].length : 0;
         document.getElementById(`badge-ciclo-${num}`).textContent = count;
       });
-
       selecionarCiclo(cicloAtual);
     }
 
@@ -365,7 +419,7 @@
         <div class="col-12">
           <div class="card item-card p-3">
             <div class="d-flex justify-content-between align-items-start mb-2">
-              <span class="badge text-bg-indigo fw-bold" style="background-color: var(--indigo-accent); color: white;">
+              <span class="badge" style="background-color: var(--indigo-accent); color: white;">
                 ${item.codigo || 'S/C'}
               </span>
               <span class="badge text-bg-light border text-dark">
@@ -384,6 +438,85 @@
           </div>
         </div>
       `).join('');
+    }
+
+    /* LÓGICA DE PROCESSAMENTO VIA IA GEMINI */
+    async function fileToGenerativePart(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve({
+          inlineData: { data: reader.result.split(',')[1], mimeType: file.type }
+        });
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function processarMapeamentoIA(event) {
+      event.preventDefault();
+
+      const apiKey = document.getElementById('api-key-gemini').value.trim();
+      const turmaKey = document.getElementById('select-turma-ia').value;
+      const fileMatriz = document.getElementById('img-matriz').files[0];
+      const fileSumario = document.getElementById('img-sumario').files[0];
+
+      if (!apiKey) return alert("Por favor, insira uma Chave de API válida.");
+
+      document.getElementById('form-ia-mapeador').classList.add('d-none');
+      document.getElementById('loading-ia').classList.remove('d-none');
+
+      try {
+        const partMatriz = await fileToGenerativePart(fileMatriz);
+        const partSumario = await fileToGenerativePart(fileSumario);
+
+        const promptSistema = `
+          Você é um motor de OCR e mapeamento pedagógico estrito. 
+          Sua tarefa é ler a Matriz de Habilidades e o Sumário do livro nas imagens e retornar um JSON com o mapeamento rigoroso.
+          Retorne EXATAMENTE neste formato JSON:
+          {
+            "ciclos": {
+              "1": [ {"codigo": "6EF01_CN", "caed": "Interpretar o ciclo da água.", "ut": "UNIDADE D — CAPÍTULO 10", "cap": "8. Hidrosfera e ciclo da água", "pag": "176"} ],
+              "2": [],
+              "3": []
+            }
+          }
+          Apenas JSON válido, sem texto adicional.
+        `;
+
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              parts: [
+                { text: promptSistema },
+                partMatriz,
+                partSumario
+              ]
+            }],
+            generationConfig: { responseMimeType: "application/json" }
+          })
+        });
+
+        const data = await response.json();
+        const resultadoTexto = data.candidates[0].content.parts[0].text;
+        const resultadoJSON = JSON.parse(resultadoTexto);
+
+        // Atualiza o banco de dados interno da aplicação
+        bancoDados[turmaKey].ciclos = resultadoJSON.ciclos;
+
+        alert("Mapeamento concluído com sucesso!");
+        document.getElementById('form-ia-mapeador').reset();
+        atualizarContadoresTurmas();
+        trocarAbaPrincipal('visualizar');
+        abrirTurma(turmaKey);
+
+      } catch (err) {
+        console.error(err);
+        alert("Erro ao processar as imagens com a IA. Verifique sua Chave de API e tente novamente.");
+      } finally {
+        document.getElementById('form-ia-mapeador').classList.remove('d-none');
+        document.getElementById('loading-ia').classList.add('d-none');
+      }
     }
   </script>
 </body>
