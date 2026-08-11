@@ -170,7 +170,7 @@
         </div>
       </div>
 
-      <!-- Navegação Superior por Abas (Mantendo as matérias originais) -->
+      <!-- Navegação Superior por Abas (Preservada) -->
       <nav class="nav-tabs-scroll mt-4">
         <a href="index.html" class="nav-tab-btn active">
           <i class="fa-solid fa-flask me-1"></i> Ciências da Natureza
@@ -188,29 +188,30 @@
   <!-- Conteúdo Principal -->
   <main class="container flex-grow-1 pb-5">
 
-    <!-- ÁREA DO MAPEADOR AUTOMÁTICO (Inicia Oculta) -->
+    <!-- ÁREA DO MAPEADOR AUTOMÁTICO IA -->
     <section id="view-mapeador" class="d-none mb-4">
       <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h2 class="h4 fw-bold mb-0"><i class="fa-solid fa-robot text-primary me-2"></i>Mapeador Automático de Habilidades</h2>
           <button class="btn-close" onclick="toggleMapeadorModal()"></button>
         </div>
-        <p class="text-muted">Envie uma ou mais imagens da **Matriz de Referência** e do **Sumário do Livro**. A IA fará a leitura rigorosa e organizará as habilidades.</p>
+        <p class="text-muted">Selecione para qual turma essas informações pertencem, envie as imagens da Matriz e do Sumário, e a IA fará o mapeamento automático.</p>
 
         <form id="form-ia-mapeador" onsubmit="processarMapeamentoIA(event)">
           <div class="row g-3 mb-3">
             <div class="col-md-6">
-              <label class="form-label fw-bold">Ano Escolar Alvo</label>
-              <select class="form-select" id="select-turma-ia" required>
-                <option value="6ano">6º Ano</option>
-                <option value="7ano">7º Ano</option>
-                <option value="8ano">8º Ano</option>
-                <option value="9ano">9º Ano</option>
+              <label class="form-label fw-bold">Turma de Destino (Onde os dados serão salvos)</label>
+              <select class="form-select fw-semibold" id="select-turma-ia" required>
+                <option value="6ano">6º Ano - Ensino Fundamental</option>
+                <option value="7ano">7º Ano - Ensino Fundamental</option>
+                <option value="8ano">8º Ano - Ensino Fundamental</option>
+                <option value="9ano">9º Ano - Ensino Fundamental</option>
               </select>
             </div>
             <div class="col-md-6">
-              <label class="form-label fw-bold">Chave de API Gemini <span class="text-muted fw-normal">(Opcional)</span></label>
-              <input type="password" class="form-control" id="api-key-gemini" placeholder="Cole aqui se tiver uma chave própria...">
+              <label class="form-label fw-bold">Chave de API do Google Gemini</label>
+              <input type="password" class="form-control" id="api-key-gemini" placeholder="Cole sua chave (AI Studio) aqui..." required>
+              <div class="form-text">Necessária para processar os arquivos diretamente do navegador no GitHub Pages.</div>
             </div>
           </div>
 
@@ -218,32 +219,30 @@
             <div class="col-md-6">
               <div class="upload-box">
                 <i class="fa-solid fa-table-list fa-2x text-primary mb-2"></i>
-                <label class="form-label d-block fw-bold mb-1">Matriz de Habilidades (Ciclos)</label>
-                <!-- atributo multiple adicionado -->
+                <label class="form-label d-block fw-bold mb-1">Matriz de Habilidades (Ciclos I, II e III)</label>
                 <input type="file" class="form-control" id="img-matriz" accept="image/*" multiple required>
-                <small class="text-muted">Você pode selecionar várias imagens de uma vez.</small>
+                <small class="text-muted">Você pode selecionar várias fotos da matriz juntas.</small>
               </div>
             </div>
             <div class="col-md-6">
               <div class="upload-box">
                 <i class="fa-solid fa-book-open-reader fa-2x text-primary mb-2"></i>
                 <label class="form-label d-block fw-bold mb-1">Sumário do Livro Didático</label>
-                <!-- atributo multiple adicionado -->
                 <input type="file" class="form-control" id="img-sumario" accept="image/*" multiple required>
-                <small class="text-muted">Você pode selecionar várias imagens de uma vez.</small>
+                <small class="text-muted">Você pode selecionar várias fotos do sumário juntas.</small>
               </div>
             </div>
           </div>
 
           <button type="submit" class="btn btn-primary fw-bold rounded-pill px-4 py-2 w-100" id="btn-processar-ia">
-            <i class="fa-solid fa-gears me-2"></i> Processar e Mapear com IA
+            <i class="fa-solid fa-gears me-2"></i> Processar e Salvar Mapeamento
           </button>
         </form>
 
         <!-- Spinner de carregamento -->
         <div id="loading-ia" class="text-center py-5 d-none">
           <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
-          <p class="fw-bold mt-3 text-indigo">Extraindo dados, correlacionando temas e páginas... Aguarde.</p>
+          <p class="fw-bold mt-3 text-indigo">Processando matrizes e sumários com rigor... Aguarde alguns instantes.</p>
         </div>
       </div>
     </section>
@@ -333,7 +332,7 @@
   </footer>
 
   <script>
-    /* BANCO DE DADOS EM BLANCO (ESTRUTURA) */
+    /* BANCO DE DADOS EM MEMÓRIA DA APLICAÇÃO */
     const bancoDados = {
       "6ano": { "titulo": "6º Ano - Ensino Fundamental", "ciclos": { 1: [], 2: [], 3: [] } },
       "7ano": { "titulo": "7º Ano - Ensino Fundamental", "ciclos": { 1: [], 2: [], 3: [] } },
@@ -460,11 +459,15 @@
     async function processarMapeamentoIA(event) {
       event.preventDefault();
 
-      const apiKeyInput = document.getElementById('api-key-gemini').value.trim();
-      const apiKey = apiKeyInput || "SUA_CHAVE_PADRAO_AQUI"; // Pode definir uma chave padrão aqui se quiser
+      const apiKey = document.getElementById('api-key-gemini').value.trim();
       const turmaKey = document.getElementById('select-turma-ia').value;
       const filesMatriz = Array.from(document.getElementById('img-matriz').files);
       const filesSumario = Array.from(document.getElementById('img-sumario').files);
+
+      if (!apiKey) {
+        alert("Por favor, insira uma Chave de API do Google Gemini para prosseguir.");
+        return;
+      }
 
       document.getElementById('form-ia-mapeador').classList.add('d-none');
       document.getElementById('loading-ia').classList.remove('d-none');
@@ -474,17 +477,26 @@
         const partsSumario = await Promise.all(filesSumario.map(fileToGenerativePart));
 
         const promptSistema = `
-          Você é um motor de OCR e mapeamento pedagógico estrito. 
-          Sua tarefa é ler todas as imagens da Matriz de Habilidades e do Sumário do livro fornecidas e retornar um JSON com o mapeamento rigoroso.
-          Retorne EXATAMENTE neste formato JSON:
+          Você é um motor de OCR e mapeamento pedagógico estrito.
+          1. Transcreva e correlacione todas as habilidades presentes nas imagens da Matriz de Referência com os capítulos/seções do Sumário do livro.
+          2. Respeite as marcações dos Ciclos (I, II e III). Se a habilidade se repetir nos ciclos, ela deve constar na lista daquele ciclo.
+          3. Retorne a resposta EXATAMENTE na seguinte estrutura de JSON válido (sem texto antes ou depois):
+
           {
             "ciclos": {
-              "1": [ {"codigo": "6EF01_CN", "caed": "Interpretar o ciclo da água.", "ut": "UNIDADE D — CAPÍTULO 10", "cap": "8. Hidrosfera e ciclo da água", "pag": "176"} ],
+              "1": [
+                {
+                  "codigo": "Código da habilidade (ex: 6EF01_CN)",
+                  "caed": "Descrição completa da habilidade",
+                  "ut": "Unidade / Capítulo do livro",
+                  "cap": "Seção / Tema dentro do capítulo",
+                  "pag": "Página ou intervalo de páginas"
+                }
+              ],
               "2": [],
               "3": []
             }
           }
-          Apenas JSON válido, sem texto adicional.
         `;
 
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`, {
@@ -502,13 +514,19 @@
           })
         });
 
+        if (!response.ok) {
+          const errData = await response.json();
+          throw new Error(errData.error?.message || "Erro na comunicação com a API.");
+        }
+
         const data = await response.json();
         const resultadoTexto = data.candidates[0].content.parts[0].text;
         const resultadoJSON = JSON.parse(resultadoTexto);
 
-        bancoDados[turmaKey].ciclos = resultadoJSON.ciclos;
+        // Preenche o banco de dados da turma selecionada
+        bancoDados[turmaKey].ciclos = resultadoJSON.ciclos || { 1: [], 2: [], 3: [] };
 
-        alert("Mapeamento concluído com sucesso!");
+        alert(`Mapeamento concluído com sucesso para o ${bancoDados[turmaKey].titulo}!`);
         document.getElementById('form-ia-mapeador').reset();
         document.getElementById('view-mapeador').classList.add('d-none');
         atualizarContadoresTurmas();
@@ -516,7 +534,7 @@
 
       } catch (err) {
         console.error(err);
-        alert("Erro ao processar as imagens com a IA. Verifique as imagens ou a chave de API e tente novamente.");
+        alert(`Erro ao processar as imagens com a IA:\n${err.message}\n\nVerifique se a chave de API é válida e tente novamente.`);
       } finally {
         document.getElementById('form-ia-mapeador').classList.remove('d-none');
         document.getElementById('loading-ia').classList.add('d-none');
