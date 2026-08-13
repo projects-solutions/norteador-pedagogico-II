@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- Favicon SVG Exclusivo (Identidade Própria) -->
+  <!-- Favicon SVG Exclusivo -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%234f46e5;stop-opacity:1' /><stop offset='100%' style='stop-color:%237c3aed;stop-opacity:1' /></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23grad)'/><circle cx='50' cy='50' r='30' fill='none' stroke='%23ffffff' stroke-width='4' opacity='0.3'/><polygon points='50,22 60,50 50,42' fill='%23fbbf24'/><polygon points='50,78 40,50 50,58' fill='%23ffffff'/><polygon points='50,22 40,50 50,42' fill='%23f59e0b'/><polygon points='50,78 60,50 50,58' fill='%23e2e8f0'/><circle cx='50' cy='50' r='5' fill='%23ffffff'/></svg>">
 
-  <title>Norteador Pedagógico - Matemática</title>
+  <title>Norteador Pedagógico - Matemática (9º Ano)</title>
 
   <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,9 +45,8 @@
 
     .nav-tabs-scroll {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      justify-content: space-between;
+      gap: 0.5rem;
+      justify-content: center;
       width: 100%;
     }
 
@@ -56,27 +55,15 @@
       background: rgba(255, 255, 255, 0.15);
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 50rem;
-      padding: 0.5rem 0.25rem;
+      padding: 0.5rem 1.5rem;
       font-weight: 600;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       text-decoration: none;
       transition: all 0.2s ease;
       text-align: center;
-      flex: 1 1 30%;
-      box-sizing: border-box;
+      flex: 1 1 45%;
+      max-width: 200px;
       white-space: nowrap;
-    }
-
-    @media (min-width: 768px) {
-      .nav-tabs-scroll {
-        justify-content: start;
-        gap: 0.5rem;
-      }
-      .nav-tab-btn {
-        padding: 0.5rem 1.25rem;
-        font-size: 0.95rem;
-        flex: 0 0 auto;
-      }
     }
 
     .nav-tab-btn:hover {
@@ -109,8 +96,9 @@
       background-color: #e0e7ff;
       color: #4338ca;
       font-weight: 700;
-      padding: 0.4em 0.8em;
+      padding: 0.5em 1em;
       border-radius: 50rem;
+      font-size: 0.9rem;
     }
 
     .cycle-btn {
@@ -153,7 +141,7 @@
           <i class="fa-solid fa-compass fa-2x text-warning"></i>
           <div>
             <h1 class="h3 fw-bold mb-0">Norteador Pedagógico</h1>
-            <p class="small text-white-50 mb-0">Mapeamento de Habilidades CAEd &amp; Livro Didático</p>
+            <p class="small text-white-50 mb-0">Mapeamento CAEd &amp; Livro Didático (9º Ano)</p>
           </div>
         </div>
         <span class="badge text-bg-light fw-semibold fs-6 px-3 py-2 d-none d-md-inline-block">
@@ -161,11 +149,8 @@
         </span>
       </div>
 
-      <!-- Navegação Superior por Abas (Matérias) Adaptada para Mobile -->
+      <!-- Navegação Superior Apenas Português e Matemática -->
       <nav class="nav-tabs-scroll mt-3">
-        <a href="index.html" class="nav-tab-btn">
-          <i class="fa-solid fa-flask me-1"></i> Ciências
-        </a>
         <a href="portugues.html" class="nav-tab-btn">
           <i class="fa-solid fa-book-open me-1"></i> Português
         </a>
@@ -179,50 +164,21 @@
   <!-- Conteúdo Principal -->
   <main class="container flex-grow-1 pb-5">
 
-    <!-- TELA 1: SELEÇÃO DE TURMAS -->
+    <!-- TELA 1: SELEÇÃO DE TURMAS (APENAS 9º ANO) -->
     <section id="view-turmas">
-      <div class="mb-4">
-        <h2 class="h4 fw-bold">Selecione o Ano Escolar</h2>
-        <p class="text-muted">Escolha a turma para visualizar o mapeamento por ciclos pedagógicos.</p>
+      <div class="mb-4 text-center text-md-start">
+        <h2 class="h4 fw-bold">Turma Avaliada</h2>
+        <p class="text-muted">Clique no card do 9º Ano para visualizar o mapeamento por ciclos pedagógicos.</p>
       </div>
 
-      <div class="row g-3">
-        <div class="col-6 col-md-3">
-          <div class="card card-turma p-3 text-center h-100" onclick="abrirTurma('6ano')">
+      <div class="row justify-content-center justify-content-md-start">
+        <div class="col-12 col-sm-8 col-md-5 col-lg-4">
+          <div class="card card-turma p-4 text-center" onclick="abrirTurma('9ano')">
             <div class="mb-3 mt-2">
-              <i class="fa-solid fa-shapes fa-3x text-primary"></i>
+              <i class="fa-solid fa-subscript fa-4x text-primary"></i>
             </div>
-            <h3 class="h5 fw-bold">6º Ano</h3>
-            <span class="badge badge-custom mt-2" id="badge-count-6ano">0 Habilidades</span>
-          </div>
-        </div>
-
-        <div class="col-6 col-md-3">
-          <div class="card card-turma p-3 text-center h-100" onclick="abrirTurma('7ano')">
-            <div class="mb-3 mt-2">
-              <i class="fa-solid fa-chart-pie fa-3x text-primary"></i>
-            </div>
-            <h3 class="h5 fw-bold">7º Ano</h3>
-            <span class="badge badge-custom mt-2" id="badge-count-7ano">0 Habilidades</span>
-          </div>
-        </div>
-
-        <div class="col-6 col-md-3">
-          <div class="card card-turma p-3 text-center h-100" onclick="abrirTurma('8ano')">
-            <div class="mb-3 mt-2">
-              <i class="fa-solid fa-square-root-variable fa-3x text-primary"></i>
-            </div>
-            <h3 class="h5 fw-bold">8º Ano</h3>
-            <span class="badge badge-custom mt-2" id="badge-count-8ano">0 Habilidades</span>
-          </div>
-        </div>
-
-        <div class="col-6 col-md-3">
-          <div class="card card-turma p-3 text-center h-100" onclick="abrirTurma('9ano')">
-            <div class="mb-3 mt-2">
-              <i class="fa-solid fa-subscript fa-3x text-primary"></i>
-            </div>
-            <h3 class="h5 fw-bold">9º Ano</h3>
+            <h3 class="h4 fw-bold">9º Ano</h3>
+            <p class="text-muted small mb-2">Ensino Fundamental</p>
             <span class="badge badge-custom mt-2" id="badge-count-9ano">0 Habilidades</span>
           </div>
         </div>
@@ -235,7 +191,7 @@
         <button class="btn btn-outline-secondary fw-semibold rounded-pill px-3" onclick="voltarParaTurmas()">
           <i class="fa-solid fa-arrow-left me-1"></i> Voltar
         </button>
-        <h2 class="h4 fw-bold mb-0" id="turma-titulo">6º Ano - Ensino Fundamental</h2>
+        <h2 class="h4 fw-bold mb-0" id="turma-titulo">9º Ano - Ensino Fundamental</h2>
       </div>
 
       <!-- Navegador de Ciclos -->
@@ -260,24 +216,12 @@
   </main>
 
   <footer class="text-center py-3 text-muted small mt-auto border-top">
-    Norteador Pedagógico &copy; 2026 - Mapeamento CAEd
+    Norteador Pedagógico &copy; 2026 - Mapeamento CAEd (9º Ano)
   </footer>
 
   <script>
-    /* BANCO DE DADOS LIMPO */
+    /* BANCO DE DADOS LIMPO (APENAS 9º ANO) */
     const bancoDados = {
-      "6ano": {
-        "titulo": "6º Ano - Ensino Fundamental",
-        "ciclos": { 1: [], 2: [], 3: [] }
-      },
-      "7ano": {
-        "titulo": "7º Ano - Ensino Fundamental",
-        "ciclos": { 1: [], 2: [], 3: [] }
-      },
-      "8ano": {
-        "titulo": "8º Ano - Ensino Fundamental",
-        "ciclos": { 1: [], 2: [], 3: [] }
-      },
       "9ano": {
         "titulo": "9º Ano - Ensino Fundamental",
         "ciclos": { 1: [], 2: [], 3: [] }
@@ -292,17 +236,15 @@
     });
 
     function atualizarContadoresTurmas() {
-      Object.keys(bancoDados).forEach(turmaKey => {
-        const turma = bancoDados[turmaKey];
-        let total = 0;
-        Object.keys(turma.ciclos).forEach(c => {
-          total += turma.ciclos[c].length;
-        });
-        const badgeElement = document.getElementById(`badge-count-${turmaKey}`);
-        if (badgeElement) {
-          badgeElement.textContent = `${total} Habilidade${total === 1 ? '' : 's'}`;
-        }
+      const turma = bancoDados["9ano"];
+      let total = 0;
+      Object.keys(turma.ciclos).forEach(c => {
+        total += turma.ciclos[c].length;
       });
+      const badgeElement = document.getElementById("badge-count-9ano");
+      if (badgeElement) {
+        badgeElement.textContent = `${total} Habilidade${total === 1 ? '' : 's'}`;
+      }
     }
 
     function abrirTurma(turmaKey) {
