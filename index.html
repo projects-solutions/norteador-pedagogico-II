@@ -7,7 +7,7 @@
   <!-- Favicon SVG Exclusivo -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%234f46e5;stop-opacity:1' /><stop offset='100%' style='stop-color:%237c3aed;stop-opacity:1' /></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23grad)'/><circle cx='50' cy='50' r='30' fill='none' stroke='%23ffffff' stroke-width='4' opacity='0.3'/><polygon points='50,22 60,50 50,42' fill='%23fbbf24'/><polygon points='50,78 40,50 50,58' fill='%23ffffff'/><polygon points='50,22 40,50 50,42' fill='%23f59e0b'/><polygon points='50,78 60,50 50,58' fill='%23e2e8f0'/><circle cx='50' cy='50' r='5' fill='%23ffffff'/></svg>">
 
-  <title>Norteador Pedagógico</title>
+  <title>Norteador Pedagógico - Ciclo III</title>
 
   <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -88,26 +88,16 @@
       box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
     }
 
-    /* Botões de Seleção de Ciclos */
-    .cycle-btn {
-      border: 1px solid #cbd5e1;
-      background-color: #ffffff;
-      color: #64748b;
-      font-weight: 600;
-      border-radius: 0.75rem;
-      padding: 0.5rem 1rem;
-      transition: all 0.2s ease;
-    }
-
-    .cycle-btn:hover {
-      background-color: #f1f5f9;
-      color: #334155;
-    }
-
-    .cycle-btn.active {
+    /* Badge do Ciclo Atual */
+    .cycle-badge-active {
       background-color: var(--indigo-accent);
       color: #ffffff;
-      border-color: var(--indigo-accent);
+      font-weight: 700;
+      border-radius: 0.75rem;
+      padding: 0.6rem 1.25rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
       box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
     }
 
@@ -129,11 +119,11 @@
           <i class="fa-solid fa-compass fa-2x text-warning"></i>
           <div>
             <h1 class="h3 fw-bold mb-0">Norteador Pedagógico</h1>
-            <p class="small text-white-50 mb-0">Mapeamento CAEd &amp; Livro Didático</p>
+            <p class="small text-white-50 mb-0">Mapeamento CAEd &amp; Livro Didático — Ciclo III</p>
           </div>
         </div>
         <span class="badge text-bg-light fw-semibold fs-6 px-3 py-2 d-none d-md-inline-block">
-          <i class="fa-solid fa-graduation-cap text-primary me-1"></i> Ensino Fundamental
+          <i class="fa-solid fa-clock-rotate-left text-primary me-1"></i> Ciclo III (Atual)
         </span>
       </div>
     </div>
@@ -146,7 +136,7 @@
     <section id="view-turmas">
       <div class="mb-4 text-center text-md-start">
         <h2 class="h4 fw-bold">Selecione o Ano Escolar</h2>
-        <p class="text-muted">Escolha a turma para visualizar os componentes curriculares e ciclos pedagógicos.</p>
+        <p class="text-muted">Escolha a turma para visualizar os mapeamentos do **Ciclo III**.</p>
       </div>
 
       <div class="row g-3 justify-content-center justify-content-md-start">
@@ -182,7 +172,7 @@
       </div>
     </section>
 
-    <!-- TELA 2: DASHBOARD COM COMPONENTES CURRICULARES E CICLOS -->
+    <!-- TELA 2: DASHBOARD COM COMPONENTES CURRICULARES E CICLO III -->
     <section id="view-detalhes" class="d-none">
       <div class="d-flex align-items-center justify-content-between mb-4">
         <button class="btn btn-outline-secondary fw-semibold rounded-pill px-3" onclick="voltarParaTurmas()">
@@ -208,20 +198,16 @@
         </div>
       </div>
 
-      <!-- SELETOR DE CICLOS PEDAGÓGICOS -->
-      <div class="d-flex gap-2 mb-4 overflow-auto pb-2">
-        <button class="btn cycle-btn active" id="btn-ciclo-1" onclick="selecionarCiclo(1)">
-          Ciclo I <span class="badge text-bg-light rounded-pill ms-1" id="badge-ciclo-1">0</span>
-        </button>
-        <button class="btn cycle-btn" id="btn-ciclo-2" onclick="selecionarCiclo(2)">
-          Ciclo II <span class="badge text-bg-light rounded-pill ms-1" id="badge-ciclo-2">0</span>
-        </button>
-        <button class="btn cycle-btn" id="btn-ciclo-3" onclick="selecionarCiclo(3)">
-          Ciclo III <span class="badge text-bg-light rounded-pill ms-1" id="badge-ciclo-3">0</span>
-        </button>
+      <!-- INDICADOR FIXO DO CICLO III (CICLO ATUAL) -->
+      <div class="mb-4">
+        <div class="cycle-badge-active fs-6">
+          <i class="fa-solid fa-calendar-check text-warning"></i>
+          <span>Ciclo III — Avaliação Atual</span>
+          <span class="badge text-bg-light rounded-pill ms-2" id="badge-count-ciclo3">0</span>
+        </div>
       </div>
 
-      <!-- LISTA DE DESCRITORES/HABILIDADES DO CICLO -->
+      <!-- LISTA DE DESCRITORES/HABILIDADES DO CICLO III -->
       <div id="lista-conteudo" class="row g-3">
         <!-- Renderizado dinamicamente via JS -->
       </div>
@@ -230,27 +216,26 @@
   </main>
 
   <footer class="text-center py-3 text-muted small mt-auto border-top">
-    Norteador Pedagógico &copy; 2026 - Mapeamento CAEd
+    Norteador Pedagógico &copy; 2026 - Mapeamento CAEd (Ciclo III)
   </footer>
 
   <script>
-    /* BANCO DE DADOS INTEGRADO (5º ANO E 9º ANO) */
+    /* BANCO DE DADOS FOCO NO CICLO III */
     const bancoDados = {
       "5ano": {
         "titulo": "5º Ano - Ensino Fundamental I",
-        "portugues": { 1: [], 2: [], 3: [] },
-        "matematica": { 1: [], 2: [], 3: [] }
+        "portugues": [], // Itens do Ciclo III de Português (5º Ano)
+        "matematica": [] // Itens do Ciclo III de Matemática (5º Ano)
       },
       "9ano": {
         "titulo": "9º Ano - Ensino Fundamental II",
-        "portugues": { 1: [], 2: [], 3: [] },
-        "matematica": { 1: [], 2: [], 3: [] }
+        "portugues": [], // Itens do Ciclo III de Português (9º Ano)
+        "matematica": [] // Itens do Ciclo III de Matemática (9º Ano)
       }
     };
 
     let turmaAtual = null;
     let materiaAtual = 'portugues';
-    let cicloAtual = 1;
 
     document.addEventListener("DOMContentLoaded", () => {
       atualizarContadoresIniciais();
@@ -258,14 +243,14 @@
 
     function atualizarContadoresIniciais() {
       // 5º Ano
-      let t5P = bancoDados["5ano"].portugues[1].length + bancoDados["5ano"].portugues[2].length + bancoDados["5ano"].portugues[3].length;
-      let t5M = bancoDados["5ano"].matematica[1].length + bancoDados["5ano"].matematica[2].length + bancoDados["5ano"].matematica[3].length;
+      let t5P = bancoDados["5ano"].portugues.length;
+      let t5M = bancoDados["5ano"].matematica.length;
       document.getElementById("badge-5ano-port").textContent = `Português: ${t5P} Descritore${t5P === 1 ? '' : 's'}`;
       document.getElementById("badge-5ano-mat").textContent = `Matemática: ${t5M} Habilidade${t5M === 1 ? '' : 's'}`;
 
       // 9º Ano
-      let t9P = bancoDados["9ano"].portugues[1].length + bancoDados["9ano"].portugues[2].length + bancoDados["9ano"].portugues[3].length;
-      let t9M = bancoDados["9ano"].matematica[1].length + bancoDados["9ano"].matematica[2].length + bancoDados["9ano"].matematica[3].length;
+      let t9P = bancoDados["9ano"].portugues.length;
+      let t9M = bancoDados["9ano"].matematica.length;
       document.getElementById("badge-9ano-port").textContent = `Português: ${t9P} Descritore${t9P === 1 ? '' : 's'}`;
       document.getElementById("badge-9ano-mat").textContent = `Matemática: ${t9M} Habilidade${t9M === 1 ? '' : 's'}`;
     }
@@ -292,43 +277,22 @@
       document.getElementById('btn-mat-portugues').classList.toggle('active', materia === 'portugues');
       document.getElementById('btn-mat-matematica').classList.toggle('active', materia === 'matematica');
 
-      renderizarCiclos();
-    }
-
-    function selecionarCiclo(cicloNum) {
-      cicloAtual = cicloNum;
-
-      [1, 2, 3].forEach(num => {
-        const btn = document.getElementById(`btn-ciclo-${num}`);
-        if (num === cicloNum) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
-      });
-
       renderizarListaConteudo();
-    }
-
-    function renderizarCiclos() {
-      [1, 2, 3].forEach(num => {
-        const count = bancoDados[turmaAtual][materiaAtual][num].length;
-        document.getElementById(`badge-ciclo-${num}`).textContent = count;
-      });
-
-      selecionarCiclo(cicloAtual);
     }
 
     function renderizarListaConteudo() {
       const container = document.getElementById('lista-conteudo');
-      const itens = bancoDados[turmaAtual][materiaAtual][cicloAtual] || [];
+      const itens = bancoDados[turmaAtual][materiaAtual] || [];
+
+      // Atualiza o contador no selo do Ciclo III
+      document.getElementById('badge-count-ciclo3').textContent = itens.length;
 
       if (itens.length === 0) {
         container.innerHTML = `
           <div class="col-12 text-center py-5">
             <div class="p-4 bg-white rounded-4 shadow-sm d-inline-block">
               <i class="fa-solid fa-folder-open fa-3x text-muted mb-3"></i>
-              <p class="text-muted fw-medium mb-0">Nenhum item cadastrado para este ciclo em ${materiaAtual === 'portugues' ? 'Língua Portuguesa' : 'Matemática'}.</p>
+              <p class="text-muted fw-medium mb-0">Nenhum item cadastrado para o Ciclo III em ${materiaAtual === 'portugues' ? 'Língua Portuguesa' : 'Matemática'}.</p>
             </div>
           </div>
         `;
