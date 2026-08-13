@@ -7,7 +7,7 @@
   <!-- Favicon SVG Exclusivo -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%234f46e5;stop-opacity:1' /><stop offset='100%' style='stop-color:%237c3aed;stop-opacity:1' /></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23grad)'/><circle cx='50' cy='50' r='30' fill='none' stroke='%23ffffff' stroke-width='4' opacity='0.3'/><polygon points='50,22 60,50 50,42' fill='%23fbbf24'/><polygon points='50,78 40,50 50,58' fill='%23ffffff'/><polygon points='50,22 40,50 50,42' fill='%23f59e0b'/><polygon points='50,78 60,50 50,58' fill='%23e2e8f0'/><circle cx='50' cy='50' r='5' fill='%23ffffff'/></svg>">
 
-  <title>Norteador Pedagógico - Ciclo III</title>
+  <title>Norteador Pedagógico - UI Eurival Gomes</title>
 
   <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +19,9 @@
 
   <!-- FontAwesome 6.4 CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <!-- Biblioteca HTML2PDF para Geração do E-Book -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
     :root {
@@ -38,9 +41,16 @@
 
     .header-bg {
       background: var(--primary-gradient);
-      border-bottom-left-radius: 2rem;
-      border-bottom-right-radius: 2rem;
+      border-bottom-left-radius: 1.5rem;
+      border-bottom-right-radius: 1.5rem;
       box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.25);
+    }
+
+    @media (min-width: 768px) {
+      .header-bg {
+        border-bottom-left-radius: 2rem;
+        border-bottom-right-radius: 2rem;
+      }
     }
 
     .card-turma {
@@ -107,6 +117,28 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.03);
       border-left: 4px solid var(--indigo-accent);
     }
+
+    /* Estilos de Impressão do E-Book PDF */
+    #pdf-template {
+      display: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding: 20px;
+      color: #1e293b;
+    }
+
+    .pdf-header {
+      border-bottom: 2px solid #4f46e5;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+
+    .pdf-item {
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      background-color: #ffffff;
+    }
   </style>
 </head>
 <body>
@@ -114,17 +146,24 @@
   <!-- Header principal -->
   <header class="header-bg pt-4 pb-4 text-white mb-4">
     <div class="container">
-      <div class="d-flex align-items-center justify-content-between">
+      <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 text-center text-md-start">
         <div class="d-flex align-items-center gap-3">
-          <i class="fa-solid fa-compass fa-2x text-warning"></i>
+          <i class="fa-solid fa-compass fa-3x text-warning"></i>
           <div>
-            <h1 class="h3 fw-bold mb-0">Norteador Pedagógico</h1>
+            <!-- Nome da Escola com Grande Destaque -->
+            <h1 class="h3 fw-extrabold mb-1 tracking-tight text-uppercase text-warning">
+              Unidade Integrada Eurival Gomes
+            </h1>
+            <!-- Título do Projeto e Subtítulo -->
+            <h2 class="h4 fw-bold mb-0 text-white">Norteador Pedagógico</h2>
             <p class="small text-white-50 mb-0">Mapeamento CAEd &amp; Livro Didático — Ciclo III</p>
           </div>
         </div>
-        <span class="badge text-bg-light fw-semibold fs-6 px-3 py-2 d-none d-md-inline-block">
-          <i class="fa-solid fa-clock-rotate-left text-primary me-1"></i> Ciclo III (Atual)
-        </span>
+        <div class="d-flex align-items-center gap-2">
+          <span class="badge text-bg-light fw-semibold fs-6 px-3 py-2 shadow-sm">
+            <i class="fa-solid fa-clock-rotate-left text-primary me-1"></i> Ciclo III (Atual)
+          </span>
+        </div>
       </div>
     </div>
   </header>
@@ -132,11 +171,11 @@
   <!-- Conteúdo Principal -->
   <main class="container flex-grow-1 pb-5">
 
-    <!-- TELA 1: SELEÇÃO DE TURMAS (5º ANO E 9º ANO) -->
+    <!-- TELA 1: SELEÇÃO DE TURMAS -->
     <section id="view-turmas">
       <div class="mb-4 text-center text-md-start">
         <h2 class="h4 fw-bold">Selecione o Ano Escolar</h2>
-        <p class="text-muted">Escolha a turma para visualizar os mapeamentos do **Ciclo III**.</p>
+        <p class="text-muted">Escolha a turma para visualizar ou gerar o e-book em PDF dos mapeamentos do **Ciclo III**.</p>
       </div>
 
       <div class="row g-3 justify-content-center justify-content-md-start">
@@ -172,13 +211,18 @@
       </div>
     </section>
 
-    <!-- TELA 2: DASHBOARD COM COMPONENTES CURRICULARES E CICLO III -->
+    <!-- TELA 2: DASHBOARD COM COMPONENTES CURRICULARES E E-BOOK -->
     <section id="view-detalhes" class="d-none">
-      <div class="d-flex align-items-center justify-content-between mb-4">
+      <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3 mb-4">
         <button class="btn btn-outline-secondary fw-semibold rounded-pill px-3" onclick="voltarParaTurmas()">
           <i class="fa-solid fa-arrow-left me-1"></i> Voltar
         </button>
-        <h2 class="h4 fw-bold mb-0" id="turma-titulo">Turma</h2>
+        <h2 class="h4 fw-bold mb-0 text-center text-sm-start" id="turma-titulo">Turma</h2>
+        
+        <!-- BOTÃO DE GERAR E-BOOK PDF -->
+        <button class="btn btn-success fw-bold rounded-pill px-3 shadow-sm w-100 w-sm-auto" data-bs-toggle="modal" data-bs-target="#modalPdf">
+          <i class="fa-solid fa-file-pdf me-1"></i> Baixar E-Book (PDF)
+        </button>
       </div>
 
       <!-- SELETOR DE COMPONENTES CURRICULARES (MATÉRIAS) -->
@@ -198,8 +242,8 @@
         </div>
       </div>
 
-      <!-- INDICADOR FIXO DO CICLO III (CICLO ATUAL) -->
-      <div class="mb-4">
+      <!-- INDICADOR FIXO DO CICLO III -->
+      <div class="mb-4 d-flex justify-content-between align-items-center">
         <div class="cycle-badge-active fs-6">
           <i class="fa-solid fa-calendar-check text-warning"></i>
           <span>Ciclo III — Avaliação Atual</span>
@@ -215,22 +259,72 @@
 
   </main>
 
+  <!-- MODAL DE CONFIGURAÇÃO E DOWNLOAD DO PDF -->
+  <div class="modal fade" id="modalPdf" tabindex="-1" aria-labelledby="modalPdfLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-4 border-0 shadow">
+        <div class="modal-header border-bottom-0 pb-0">
+          <h1 class="modal-title fs-5 fw-bold" id="modalPdfLabel">
+            <i class="fa-solid fa-book-bookmark text-primary me-2"></i> Baixar E-Book da Turma
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body py-4">
+          <p class="text-muted small">Selecione de qual componente curricular deseja salvar o e-book em formato PDF:</p>
+          
+          <div class="form-check p-3 border rounded-3 mb-2 bg-light">
+            <input class="form-check-input ms-0 me-2" type="radio" name="opcaoPdf" id="pdfAtual" value="atual" checked>
+            <label class="form-check-label fw-bold cursor-pointer" for="pdfAtual">
+              Mapeamento Atual <span class="badge text-bg-primary ms-1" id="labelMateriaAtual">Português</span>
+            </label>
+          </div>
+
+          <div class="form-check p-3 border rounded-3 mb-2 bg-light">
+            <input class="form-check-input ms-0 me-2" type="radio" name="opcaoPdf" id="pdfCompleto" value="ambas">
+            <label class="form-check-label fw-bold cursor-pointer" for="pdfCompleto">
+              E-Book Completo (Língua Portuguesa &amp; Matemática)
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer border-top-0 pt-0">
+          <button type="button" class="btn btn-light fw-semibold rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary fw-bold rounded-pill px-4" onclick="gerarPdfEbook()">
+            <i class="fa-solid fa-download me-1"></i> Baixar Agora
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTAINER OCULTO PARA GERAR O PDF DO E-BOOK -->
+  <div id="pdf-template">
+    <div class="pdf-header text-center">
+      <h3 style="margin:0; font-weight: 800; color: #4f46e5;">UNIDADE INTEGRADA EURIVAL GOMES</h3>
+      <h4 style="margin: 5px 0 0 0; color: #334155;" id="pdf-turma-nome">5º Ano — Ensino Fundamental</h4>
+      <p style="margin: 3px 0 0 0; font-size: 13px; color: #64748b;">Norteador Pedagógico | Mapeamento CAEd &amp; Livro Didático (Ciclo III)</p>
+    </div>
+    <div id="pdf-conteudo"></div>
+  </div>
+
   <footer class="text-center py-3 text-muted small mt-auto border-top">
-    Norteador Pedagógico &copy; 2026 - Mapeamento CAEd (Ciclo III)
+    Unidade Integrada Eurival Gomes &copy; 2026 - Norteador Pedagógico
   </footer>
 
+  <!-- Bootstrap 5.3 Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
   <script>
-    /* BANCO DE DADOS FOCO NO CICLO III */
+    /* BANCO DE DADOS INTEGRADO (5º ANO E 9º ANO) */
     const bancoDados = {
       "5ano": {
         "titulo": "5º Ano - Ensino Fundamental I",
-        "portugues": [], // Itens do Ciclo III de Português (5º Ano)
-        "matematica": [] // Itens do Ciclo III de Matemática (5º Ano)
+        "portugues": [],
+        "matematica": []
       },
       "9ano": {
         "titulo": "9º Ano - Ensino Fundamental II",
-        "portugues": [], // Itens do Ciclo III de Português (9º Ano)
-        "matematica": [] // Itens do Ciclo III de Matemática (9º Ano)
+        "portugues": [],
+        "matematica": []
       }
     };
 
@@ -276,6 +370,7 @@
 
       document.getElementById('btn-mat-portugues').classList.toggle('active', materia === 'portugues');
       document.getElementById('btn-mat-matematica').classList.toggle('active', materia === 'matematica');
+      document.getElementById('labelMateriaAtual').textContent = materia === 'portugues' ? 'Língua Portuguesa' : 'Matemática';
 
       renderizarListaConteudo();
     }
@@ -284,7 +379,6 @@
       const container = document.getElementById('lista-conteudo');
       const itens = bancoDados[turmaAtual][materiaAtual] || [];
 
-      // Atualiza o contador no selo do Ciclo III
       document.getElementById('badge-count-ciclo3').textContent = itens.length;
 
       if (itens.length === 0) {
@@ -322,6 +416,70 @@
           </div>
         </div>
       `).join('');
+    }
+
+    /* FUNÇÃO DE GERAÇÃO DO E-BOOK EM PDF */
+    function gerarPdfEbook() {
+      const opcao = document.querySelector('input[name="opcaoPdf"]:checked').value;
+      const pdfContainer = document.getElementById('pdf-conteudo');
+      document.getElementById('pdf-turma-nome').textContent = bancoDados[turmaAtual].titulo;
+      
+      pdfContainer.innerHTML = '';
+
+      let materiasParaImprimir = [];
+      if (opcao === 'atual') {
+        materiasParaImprimir.push(materiaAtual);
+      } else {
+        materiasParaImprimir.push('portugues', 'matematica');
+      }
+
+      materiasParaImprimir.forEach(mat => {
+        const itens = bancoDados[turmaAtual][mat];
+        const nomeMat = mat === 'portugues' ? 'Língua Portuguesa' : 'Matemática';
+
+        let htmlMat = `<h3 style="color:#3b82f6; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; margin-top: 20px;">${nomeMat}</h3>`;
+
+        if (itens.length === 0) {
+          htmlMat += `<p style="font-style: italic; color: #94a3b8;">Nenhum item cadastrado para este componente.</p>`;
+        } else {
+          itens.forEach(item => {
+            htmlMat += `
+              <div class="pdf-item">
+                <div style="display:flex; justify-content:space-between; font-weight:bold; margin-bottom:5px;">
+                  <span style="color:#4f46e5;">Código: ${item.codigo || 'S/C'}</span>
+                  <span>Página: ${item.pag || 'N/A'}</span>
+                </div>
+                <div style="font-size:14px; font-weight:600; margin-bottom:8px;">${item.caed || 'Sem descrição'}</div>
+                <div style="font-size:12px; color:#64748b; border-top:1px solid #f1f5f9; padding-top:4px;">
+                  <strong>Unidade/Cap:</strong> ${item.ut || 'N/A'} | <strong>Seção/Tema:</strong> ${item.cap || 'N/A'}
+                </div>
+              </div>
+            `;
+          });
+        }
+        pdfContainer.innerHTML += htmlMat;
+      });
+
+      // Fechar Modal Bootstrap
+      const modalEl = document.getElementById('modalPdf');
+      const modal = bootstrap.Modal.getInstance(modalEl);
+      if (modal) modal.hide();
+
+      // Opções do PDF
+      const element = document.getElementById('pdf-template');
+      element.style.display = 'block';
+
+      const opt = {
+        margin:       0.5,
+        filename:     `E-Book_Pedagogico_${turmaAtual}_Ciclo3.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(element).save().then(() => {
+        element.style.display = 'none';
+      });
     }
   </script>
 </body>
