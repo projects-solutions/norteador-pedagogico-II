@@ -76,7 +76,6 @@
       font-size: 0.85rem;
     }
 
-    /* Botões de Seleção de Matéria */
     .materia-btn {
       border: 1px solid #cbd5e1;
       background-color: #ffffff;
@@ -98,7 +97,6 @@
       box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
     }
 
-    /* Badge do Ciclo Atual */
     .cycle-badge-active {
       background-color: var(--indigo-accent);
       color: #ffffff;
@@ -113,9 +111,20 @@
 
     .item-card {
       border: none;
-      border-radius: 1rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-      border-left: 4px solid var(--indigo-accent);
+      border-radius: 1.25rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+      border-left: 5px solid var(--indigo-accent);
+      transition: all 0.2s ease;
+    }
+
+    .item-card:hover {
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.12);
+    }
+
+    .roteiro-box {
+      background-color: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 0.85rem;
     }
 
     /* Estilos de Impressão do E-Book PDF */
@@ -150,18 +159,16 @@
         <div class="d-flex align-items-center gap-3">
           <i class="fa-solid fa-compass fa-3x text-warning"></i>
           <div>
-            <!-- Nome da Escola com Grande Destaque -->
             <h1 class="h3 fw-extrabold mb-1 tracking-tight text-uppercase text-warning">
               Unidade Integrada Eurival Gomes
             </h1>
-            <!-- Título do Projeto e Subtítulo -->
             <h2 class="h4 fw-bold mb-0 text-white">Norteador Pedagógico</h2>
-            <p class="small text-white-50 mb-0">Mapeamento CAEd &amp; Livro Didático — Ciclo III</p>
+            <p class="small text-white-50 mb-0">Mapeamento CAEd &amp; Livro Didático — Preparação Ciclo III</p>
           </div>
         </div>
         <div class="d-flex align-items-center gap-2">
           <span class="badge text-bg-light fw-semibold fs-6 px-3 py-2 shadow-sm">
-            <i class="fa-solid fa-clock-rotate-left text-primary me-1"></i> Ciclo III (Atual)
+            <i class="fa-solid fa-clock-rotate-left text-primary me-1"></i> Ciclo III (Preparatório)
           </span>
         </div>
       </div>
@@ -175,7 +182,7 @@
     <section id="view-turmas">
       <div class="mb-4 text-center text-md-start">
         <h2 class="h4 fw-bold">Selecione o Ano Escolar</h2>
-        <p class="text-muted">Escolha a turma para visualizar ou gerar o e-book em PDF dos mapeamentos do **Ciclo III**.</p>
+        <p class="text-muted">Escolha a turma para visualizar o plano de ação e gerar o e-book em PDF dos mapeamentos do **Ciclo III**.</p>
       </div>
 
       <div class="row g-3 justify-content-center justify-content-md-start">
@@ -189,7 +196,7 @@
             <p class="text-muted small mb-3">Ensino Fundamental I</p>
             <div class="d-flex flex-column gap-2">
               <span class="badge badge-custom" id="badge-5ano-port">Português: 0 Descritores</span>
-              <span class="badge badge-custom" id="badge-5ano-mat">Matemática: 0 Habilidades</span>
+              <span class="badge badge-custom" id="badge-5ano-mat">Matemática: 0 Descritores</span>
             </div>
           </div>
         </div>
@@ -204,7 +211,7 @@
             <p class="text-muted small mb-3">Ensino Fundamental II</p>
             <div class="d-flex flex-column gap-2">
               <span class="badge badge-custom" id="badge-9ano-port">Português: 0 Descritores</span>
-              <span class="badge badge-custom" id="badge-9ano-mat">Matemática: 0 Habilidades</span>
+              <span class="badge badge-custom" id="badge-9ano-mat">Matemática: 0 Descritores</span>
             </div>
           </div>
         </div>
@@ -225,7 +232,18 @@
         </button>
       </div>
 
-      <!-- SELETOR DE COMPONENTES CURRICULARES (MATÉRIAS) -->
+      <!-- PAINEL ORIENTADOR DIDÁTICO CONTINUO (EXCLUSIVO 5º ANO) -->
+      <div id="painel-orientacao-5ano" class="alert alert-indigo bg-white border border-primary-subtle rounded-4 p-4 mb-4 shadow-sm">
+        <div class="d-flex align-items-center gap-3 mb-2">
+          <i class="fa-solid fa-lightbulb fa-2x text-warning"></i>
+          <h3 class="h5 fw-bold mb-0 text-primary">Estratégia Contínua de Recomposição para o Ciclo III</h3>
+        </div>
+        <p class="small text-secondary mb-0">
+          Como os descritores da 2ª etapa são a base direta para a avaliação do Ciclo III, utilize este roteiro passo a passo diretamente nos tópicos do livro didático da turma. **Não dependa de calendário fixo**: avance à medida que os alunos consolidarem cada habilidade!
+        </p>
+      </div>
+
+      <!-- SELETOR DE COMPONENTES CURRICULARES -->
       <div class="card p-3 mb-4 border-0 shadow-sm rounded-4 bg-white">
         <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
           <span class="fw-bold text-secondary small text-uppercase tracking-wide">
@@ -246,7 +264,7 @@
       <div class="mb-4 d-flex justify-content-between align-items-center">
         <div class="cycle-badge-active fs-6">
           <i class="fa-solid fa-calendar-check text-warning"></i>
-          <span>Ciclo III — Avaliação Atual</span>
+          <span>Matriz de Referência &amp; Roteiro de Ação</span>
           <span class="badge text-bg-light rounded-pill ms-2" id="badge-count-ciclo3">0</span>
         </div>
       </div>
@@ -301,7 +319,7 @@
     <div class="pdf-header text-center">
       <h3 style="margin:0; font-weight: 800; color: #4f46e5;">UNIDADE INTEGRADA EURIVAL GOMES</h3>
       <h4 style="margin: 5px 0 0 0; color: #334155;" id="pdf-turma-nome">5º Ano — Ensino Fundamental</h4>
-      <p style="margin: 3px 0 0 0; font-size: 13px; color: #64748b;">Norteador Pedagógico | Mapeamento CAEd &amp; Livro Didático (Ciclo III)</p>
+      <p style="margin: 3px 0 0 0; font-size: 13px; color: #64748b;">Norteador Pedagógico | Mapeamento CAEd &amp; Roteiro do Livro Didático (Ciclo III)</p>
     </div>
     <div id="pdf-conteudo"></div>
   </div>
@@ -314,12 +332,206 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    /* BANCO DE DADOS INTEGRADO (5º ANO E 9º ANO) */
+    /* BANCO DE DADOS COM AS TEMÁTICAS GENÉRICAS COMUNS DO 5º ANO (PNLD) */
     const bancoDados = {
       "5ano": {
         "titulo": "5º Ano - Ensino Fundamental I",
-        "portugues": [],
-        "matematica": []
+        "portugues": [
+          {
+            codigo: "D016_P",
+            caed: "Identificar a finalidade de textos de diferentes gêneros.",
+            ut: "Estudo dos Gêneros Textuais",
+            cap: "Leitura de Notícias, Cartas, Poemas e Anúncios",
+            pag: "Capítulos de Estudo dos Gêneros Textuais",
+            roteiro: "1. Apresentar o texto no livro. 2. Pergunta-chave: 'Para que este texto foi escrito?' (Informar, divertir, vender?). 3. Grifar marcas do gênero no texto."
+          },
+          {
+            codigo: "D017_P",
+            caed: "Reconhecer o gênero de um texto.",
+            ut: "Estudo dos Gêneros Textuais",
+            cap: "Formato, Estrutura e Suporte do Texto",
+            pag: "Unidades de Leitura e Gêneros",
+            roteiro: "1. Observar a diagramação do texto (versos, parágrafos, colunas). 2. Identificar suporte e linguagem. 3. Diferenciar poesia de prosa narrativa."
+          },
+          {
+            codigo: "D021_P",
+            caed: "Localizar informação explícita.",
+            ut: "Compreensão e Interpretação Leitora",
+            cap: "Localização por Literalidade e Paráfrase",
+            pag: "Seções de Compreensão Leitora",
+            roteiro: "1. Ler o enunciado antes do texto. 2. Usar marca-texto amarelo na frase exata que responde à questão. 3. Treinar paráfrases (dizer o mesmo com outras palavras)."
+          },
+          {
+            codigo: "D022_P",
+            caed: "Inferir o sentido de palavra ou expressão a partir do contexto.",
+            ut: "Ampliando o Vocabulário",
+            cap: "Linguagem Figurada e Sentido Contextual",
+            pag: "Seções de Estudo do Vocabulário",
+            roteiro: "1. Encontrar a palavra desconhecida no livro. 2. Ler a frase anterior e a posterior. 3. Substituir a palavra por um sinônimo sem mudar o sentido."
+          },
+          {
+            codigo: "D023_P",
+            caed: "Inferir informações em textos.",
+            ut: "Leitura nas Entrelinhas",
+            cap: "Subentendidos e Pistas Textuais",
+            pag: "Seções de Interpretação Avançada",
+            roteiro: "1. Encontrar as 'pistas' deixadas pelo autor. 2. Perguntar: 'O texto não diz diretamente, mas como posso ter certeza disso?'."
+          },
+          {
+            codigo: "D025_P",
+            caed: "Reconhecer efeitos de sentido decorrentes do uso ou função da pontuação e de outras notações.",
+            ut: "Análise da Língua",
+            cap: "Pontuação Expressiva (Aspas, Reticências, Travessão)",
+            pag: "Seções de Gramática e Ortografia",
+            roteiro: "1. Localizar aspas, reticências ou travessão em diálogos no livro. 2. Analisar a intenção: Dúvida? Ironia? Foco na fala? Surpresa?"
+          },
+          {
+            codigo: "D028_P",
+            caed: "Reconhecer o assunto de um texto lido.",
+            ut: "Ideia Central e Tema do Texto",
+            cap: "Resumo e Compreensão Global",
+            pag: "Aberturas de Capítulos e Leituras",
+            roteiro: "1. Ler o texto completo do início ao fim. 2. Resumir a ideia principal em apenas UMA frase no caderno. 3. Diferenciar assunto geral de detalhe."
+          },
+          {
+            codigo: "D030_P",
+            caed: "Reconhecer os elementos que compõem uma narrativa e o conflito gerador.",
+            ut: "Textos Narrativos",
+            cap: "Contos, Fábulas e Crônicas",
+            pag: "Unidades de Narrativa",
+            roteiro: "1. Mapear: Personagens, Tempo e Espaço. 2. Identificar o Conflito: 'Qual foi o problema que mudou a rotina da história?'."
+          },
+          {
+            codigo: "D037_P",
+            caed: "Reconhecer as relações entre partes de um texto, identificando os recursos coesivos que contribuem para a sua continuidade.",
+            ut: "Prática de Linguagem",
+            cap: "Pronomes de Retomada, Sinônimos e Conectivos",
+            pag: "Seções de Coesão e Coerência",
+            roteiro: "1. Circular pronomes no texto (ele, ela, aquele, disso). 2. Sublinhar com uma seta a palavra do parágrafo anterior que ele está substituindo."
+          },
+          {
+            codigo: "D057_P",
+            caed: "Interpretar textos que articulam elementos verbais e não verbais.",
+            ut: "Linguagem Mista",
+            cap: "Tirinhas, Charges, HQs e Infográficos",
+            pag: "Unidades de Leitura de Imagem e Texto",
+            roteiro: "1. Analisar as expressões faciais e gestos dos personagens. 2. Cruzar a imagem com a fala nos balões. 3. Explicar onde está o humor ou crítica."
+          },
+          {
+            codigo: "D115_P",
+            caed: "Reconhecer diferentes modos de organização composicional de textos em versos.",
+            ut: "Gênero Poético",
+            cap: "Poemas, Versos, Estrofes e Rimas",
+            pag: "Unidades de Poesia",
+            roteiro: "1. Contar estrofes e versos no livro. 2. Identificar rimas e ritmo. 3. Analisar a disposição visual das palavras na página."
+          }
+        ],
+        "matematica": [
+          {
+            codigo: "D002_M",
+            caed: "Reconhecer características do sistema de numeração decimal.",
+            ut: "Sistema de Numeração Decimal",
+            cap: "Ordens, Classes e Valor Posicional",
+            pag: "Unidades Iniciais do Livro",
+            roteiro: "1. Montar os números do livro no Quadro Valor de Lugar (QVL). 2. Identificar a diferença entre valor absoluto e valor relativo do algarismo."
+          },
+          {
+            codigo: "D003_M",
+            caed: "Identificar composições ou decomposições de números naturais.",
+            ut: "Sistema de Numeração Decimal",
+            cap: "Decomposição Aditiva e Multiplicativa",
+            pag: "Capítulos de Números Naturais",
+            roteiro: "1. Decompor números de até 5 ordens (Ex: 40.000 + 5.000 + 800 + 20 + 3). 2. Relacionar decomposição ao uso do dinheiro em cédulas."
+          },
+          {
+            codigo: "D005_M",
+            caed: "Utilizar números naturais, envolvendo diferentes significados da adição ou da subtração, na resolução de problemas.",
+            ut: "Adição e Subtração",
+            cap: "Situações-Problema do Cotidiano",
+            pag: "Unidades de Operações Fundamentais",
+            roteiro: "1. Aplicar o Roteiro dos 3 Passos no caderno: O que o problema quer? / Dados / Conta. 2. Trabalhar ideias de 'quanto a mais' e 'diferença'."
+          },
+          {
+            codigo: "D022_M",
+            caed: "Utilizar números naturais, envolvendo diferentes significados da multiplicação ou da divisão, na resolução de problemas.",
+            ut: "Multiplicação e Divisão",
+            cap: "Organização Retangular, Proporção e Partilha",
+            pag: "Unidades de Multiplicação e Divisão",
+            roteiro: "1. Resolver problemas com combinatória e organização retangular. 2. Trabalhar divisão com ideias de repartição em partes iguais e medida."
+          },
+          {
+            codigo: "D023_M",
+            caed: "Determinar o número desconhecido que torna verdadeira uma igualdade matemática envolvendo representação simbólica.",
+            ut: "Introdução à Álgebra",
+            cap: "Igualdade e Descoberta do Termo Desconhecido",
+            pag: "Seções de Desafios Matemáticos",
+            roteiro: "1. Apresentar igualdades com símbolos (? + 15 = 45). 2. Utilizar o conceito de operação inversa (subtração para desfazer adição)."
+          },
+          {
+            codigo: "D001_M",
+            caed: "Identificar a localização ou a movimentação de pessoas, ou objetos em uma representação plana do espaço.",
+            ut: "Espaço e Forma",
+            cap: "Localização, Croquis e Malhas Quadriculadas",
+            pag: "Unidades de Geometria e Espaço",
+            roteiro: "1. Ler coordenadas na malha (Linha x Coluna). 2. Descrever trajetos no livro usando termos: 'esquerda, direita, avançar, virar'."
+          },
+          {
+            codigo: "D020_M",
+            caed: "Corresponder figuras tridimensionais às suas planificações.",
+            ut: "Geometria Espacial",
+            cap: "Sólidos Geométricos, Prismas e Pirâmides",
+            pag: "Capítulos de Figuras Tridimensionais",
+            roteiro: "1. Associar o sólido montado à sua 'caixa aberta' (planificação). 2. Contar vértices, faces e arestas nos modelos do livro."
+          },
+          {
+            codigo: "D024_M",
+            caed: "Identificar simetrias em figuras planas.",
+            ut: "Geometria Plana",
+            cap: "Simetria de Reflexão e Eixos de Simetria",
+            pag: "Seções de Estudo das Figuras Planas",
+            roteiro: "1. Traçar o eixo de simetria dobrando a figura ou com régua. 2. Completar figuras espelhadas na malha quadriculada do livro."
+          },
+          {
+            codigo: "D025_M",
+            caed: "Utilizar área de figuras bidimensionais na resolução de problema.",
+            ut: "Grandezas e Medidas",
+            cap: "Cálculo de Área e Perímetro em Malhas Quadriculadas",
+            pag: "Unidades de Medidas de Superfície",
+            roteiro: "1. Calcular área pela contagem de quadradinhos inteiros e metades. 2. Diferenciar Área (espaço interno) de Perímetro (contorno)."
+          },
+          {
+            codigo: "D014_M",
+            caed: "Corresponder o horário de início e de término com o intervalo de duração de um evento ou acontecimento.",
+            ut: "Medidas de Tempo",
+            cap: "Horários, Calendários e Intervalos de Duração",
+            pag: "Seções de Unidades de Tempo",
+            roteiro: "1. Desenhar relógios no quadro. 2. Resolver problemas do tipo: 'A aula começou 07:30 e durou 2h45min. Que horas terminou?'."
+          },
+          {
+            codigo: "D019_M",
+            caed: "Identificar instrumentos utilizados para medir determinadas grandezas (massa, comprimento, capacidade, tempo e temperatura).",
+            ut: "Unidades de Medida",
+            cap: "Instrumentos de Medição (Massa, Comprimento, Capacidade)",
+            pag: "Unidades de Grandezas e Medidas",
+            roteiro: "1. Relacionar grandeza e instrumento: Balança (massa), Fita métrica (comprimento), Termômetro (temperatura), Jarra graduada (capacidade)."
+          },
+          {
+            codigo: "D009_M",
+            caed: "Identificar informações apresentadas em tabelas ou gráficos.",
+            ut: "Tratamento da Informação",
+            cap: "Leitura Direta de Gráficos e Tabelas",
+            pag: "Capítulos de Estatística Básica",
+            roteiro: "1. Localizar o título e a fonte do gráfico no livro. 2. Fazer a leitura direta: 'Qual foi o valor mais alto? E o mais baixo?'."
+          },
+          {
+            codigo: "D021_M",
+            caed: "Utilizar informações apresentadas em tabelas ou gráficos na resolução de problemas.",
+            ut: "Tratamento da Informação",
+            cap: "Análise e Cálculo com Dados Estatísticos",
+            pag: "Capítulos de Estatística Básica",
+            roteiro: "1. Extrair dois dados do gráfico no livro. 2. Realizar operações com esses dados (somar totais, calcular diferenças entre colunas)."
+          }
+        ]
       },
       "9ano": {
         "titulo": "9º Ano - Ensino Fundamental II",
@@ -339,14 +551,14 @@
       // 5º Ano
       let t5P = bancoDados["5ano"].portugues.length;
       let t5M = bancoDados["5ano"].matematica.length;
-      document.getElementById("badge-5ano-port").textContent = `Português: ${t5P} Descritore${t5P === 1 ? '' : 's'}`;
-      document.getElementById("badge-5ano-mat").textContent = `Matemática: ${t5M} Habilidade${t5M === 1 ? '' : 's'}`;
+      document.getElementById("badge-5ano-port").textContent = `Português: ${t5P} Descritores`;
+      document.getElementById("badge-5ano-mat").textContent = `Matemática: ${t5M} Descritores`;
 
       // 9º Ano
       let t9P = bancoDados["9ano"].portugues.length;
       let t9M = bancoDados["9ano"].matematica.length;
-      document.getElementById("badge-9ano-port").textContent = `Português: ${t9P} Descritore${t9P === 1 ? '' : 's'}`;
-      document.getElementById("badge-9ano-mat").textContent = `Matemática: ${t9M} Habilidade${t9M === 1 ? '' : 's'}`;
+      document.getElementById("badge-9ano-port").textContent = `Português: ${t9P} Descritores`;
+      document.getElementById("badge-9ano-mat").textContent = `Matemática: ${t9M} Descritores`;
     }
 
     function abrirTurma(turmaKey) {
@@ -355,6 +567,13 @@
       document.getElementById('view-turmas').classList.add('d-none');
       document.getElementById('view-detalhes').classList.remove('d-none');
       
+      const painel5ano = document.getElementById('painel-orientacao-5ano');
+      if (turmaKey === '5ano') {
+        painel5ano.classList.remove('d-none');
+      } else {
+        painel5ano.classList.add('d-none');
+      }
+
       trocarMateria('portugues');
     }
 
@@ -386,7 +605,7 @@
           <div class="col-12 text-center py-5">
             <div class="p-4 bg-white rounded-4 shadow-sm d-inline-block">
               <i class="fa-solid fa-folder-open fa-3x text-muted mb-3"></i>
-              <p class="text-muted fw-medium mb-0">Nenhum item cadastrado para o Ciclo III em ${materiaAtual === 'portugues' ? 'Língua Portuguesa' : 'Matemática'}.</p>
+              <p class="text-muted fw-medium mb-0">Nenhum item cadastrado para este componente no 9º ano.</p>
             </div>
           </div>
         `;
@@ -395,24 +614,39 @@
 
       container.innerHTML = itens.map(item => `
         <div class="col-12">
-          <div class="card item-card p-3">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <span class="badge text-bg-indigo fw-bold" style="background-color: var(--indigo-accent); color: white;">
+          <div class="card item-card p-4 bg-white">
+            <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-2">
+              <span class="badge fs-6 fw-bold" style="background-color: var(--indigo-accent); color: white;">
                 ${item.codigo || 'S/C'}
               </span>
-              <span class="badge text-bg-light border text-dark">
-                <i class="fa-solid fa-book-bookmark me-1 text-primary"></i> Pág. ${item.pag || 'N/A'}
+              <span class="badge text-bg-light border text-dark fs-6">
+                <i class="fa-solid fa-book-bookmark me-1 text-primary"></i> Seção: ${item.pag || 'N/A'}
               </span>
             </div>
-            <h4 class="h6 fw-bold text-dark mb-2">${item.caed || 'Sem descrição'}</h4>
-            <div class="row g-2 pt-2 border-top text-muted small">
+            
+            <h4 class="h5 fw-bold text-dark mb-3">${item.caed || 'Sem descrição'}</h4>
+            
+            <div class="row g-2 pt-2 border-top text-muted small mb-3">
               <div class="col-md-6">
-                <strong>Unidade / Cap:</strong> ${item.ut || 'N/A'}
+                <strong><i class="fa-solid fa-folder me-1 text-primary"></i> Temática Geral:</strong> ${item.ut || 'N/A'}
               </div>
               <div class="col-md-6">
-                <strong>Seção / Tema:</strong> ${item.cap || 'N/A'}
+                <strong><i class="fa-solid fa-file-lines me-1 text-primary"></i> Tópico do Livro:</strong> ${item.cap || 'N/A'}
               </div>
             </div>
+
+            <!-- ROTEIRO DIDÁTICO CONTINUO PASSO A PASSO -->
+            ${item.roteiro ? `
+              <div class="roteiro-box p-3 mt-2">
+                <div class="fw-bold text-primary small mb-1">
+                  <i class="fa-solid fa-route me-1"></i> Roteiro de Aplicação Prática no Livro Didático:
+                </div>
+                <div class="small text-secondary fw-medium">
+                  ${item.roteiro}
+                </div>
+              </div>
+            ` : ''}
+
           </div>
         </div>
       `).join('');
@@ -447,12 +681,17 @@
               <div class="pdf-item">
                 <div style="display:flex; justify-content:space-between; font-weight:bold; margin-bottom:5px;">
                   <span style="color:#4f46e5;">Código: ${item.codigo || 'S/C'}</span>
-                  <span>Página: ${item.pag || 'N/A'}</span>
+                  <span>Seção: ${item.pag || 'N/A'}</span>
                 </div>
                 <div style="font-size:14px; font-weight:600; margin-bottom:8px;">${item.caed || 'Sem descrição'}</div>
-                <div style="font-size:12px; color:#64748b; border-top:1px solid #f1f5f9; padding-top:4px;">
-                  <strong>Unidade/Cap:</strong> ${item.ut || 'N/A'} | <strong>Seção/Tema:</strong> ${item.cap || 'N/A'}
+                <div style="font-size:12px; color:#64748b; border-top:1px solid #f1f5f9; padding-top:4px; margin-bottom: 6px;">
+                  <strong>Temática Geral:</strong> ${item.ut || 'N/A'} | <strong>Tópico:</strong> ${item.cap || 'N/A'}
                 </div>
+                ${item.roteiro ? `
+                  <div style="font-size:11px; background-color:#f8fafc; border:1px dashed #cbd5e1; padding:6px; border-radius:4px;">
+                    <strong>Roteiro Prático:</strong> ${item.roteiro}
+                  </div>
+                ` : ''}
               </div>
             `;
           });
@@ -460,12 +699,10 @@
         pdfContainer.innerHTML += htmlMat;
       });
 
-      // Fechar Modal Bootstrap
       const modalEl = document.getElementById('modalPdf');
       const modal = bootstrap.Modal.getInstance(modalEl);
       if (modal) modal.hide();
 
-      // Opções do PDF
       const element = document.getElementById('pdf-template');
       element.style.display = 'block';
 
